@@ -1,12 +1,18 @@
 $(function() {
+	document.cookie="VISITOR_INFO1_LIVE=ST1Ti53r4fU";
+
 	if (window.location.pathname.indexOf('/watch') !== -1 || window.location.pathname.indexOf('/user') !== -1) {
 		(rparman_youtube_video_downloader = function() {
 
 			// Include DOMBuilder <http://github.com/skyzyx/dombuilder/>, compressed with Google Closure Compiler.
-			(function(){var h=function(e,c){var a=this,g=document,f;a.e=g.createElement(e);if(c)for(f in c)if(f.toString()==="class")a.e.className=c[f];else a.e.setAttribute(f,c[f]);a.child=function(b){if(typeof b!=="object"||typeof b.length!=="number"||typeof b.splice!=="function")b=[b];for(var d=0,i=b.length;d<i;d++){if(typeof b[d]==="undefined")break;typeof b[d].asDOM!=="undefined"?a.e.appendChild(b[d].asDOM()):a.e.appendChild(b[d])}return a};a.html=function(b,d){if(d=d||false)a.e.innerHTML=b;else a.e.innerHTML+=b;return a};a.asDOM=function(){return a.e};a.asHTML=function(){var b=g.createElement("div");b.appendChild(a.e);return b.innerHTML};return a};window.DOMBuilder=function(e,c){return new h(e,c)};window.DOMBuilder.DOM=function(e){var c=document.createDocumentFragment();for(e=(new h("div")).child(e).asDOM().childNodes;e.length;)c.appendChild(e[0]);return c}})();
+			var www = {};
+			(function(){var g=function(c,a){var b=this,h=document,g=/[.#]/,d;a=function(e,b){var a={},f;for(f in e)e.hasOwnProperty(f)&&(a[f]=e[f]);for(f in b)b.hasOwnProperty(f)&&(a[f]=b[f]);return a}(a,function(b){var a={"class":[]},c=/[.#]/,f,d,g;if(!c.test(b))return{};c=b.split(c);d=c.shift().length;g=a["class"];for(f in c)if(c.hasOwnProperty(f))b[d]==="#"?a.id=c[f]:g.push(c[f]),d+=c[f].length+1;a["class"]=g;a["class"].length||delete a["class"];return a}(c));b.e=g.test(c)?h.createElement(c.split(g).shift()):
+			h.createElement(c);if(a)for(d in a)if(a.hasOwnProperty(d))typeof a[d]==="object"&&typeof a[d].length==="number"&&typeof a[d].splice==="function"&&(a[d]=a[d].join(" ")),d.toString()==="class"?b.e.className=a[d]:b.e.setAttribute(d,a[d]);b.child=b._=function(e){if(typeof e!=="object"||typeof e.length!=="number"||typeof e.splice!=="function")e=[e];for(var a=0,c=e.length;a<c;a++){if(typeof e[a]==="undefined")break;typeof e[a].asDOM!=="undefined"?b.e.appendChild(e[a].asDOM()):b.e.appendChild(e[a])}return b};
+			b.html=b.H=function(a,c){if(arguments.length===0)return b.asHTML();c?b.e.innerHTML=a:b.e.innerHTML+=a;return b};b.text=b.T=function(a){if(arguments.length===0)return b.asText();if(b.e.innerText)b.e.innerText=a;else{var c=document.createTextNode(a);b.e.appendChild(c)}return b};b.asDOM=b.dom=function(){return b.e};b.asHTML=function(){var a=h.createElement("div");a.appendChild(b.e);return a.innerHTML};b.asText=function(){var a=h.createElement("div");a.appendChild(b.e);if(a.innerText)return a.innerText;
+			else if(a.textContent)return a.textContent};return b};www.DOMBuilder=function(c,a){return new g(c,a)};www.DOMBuilder.DOM=function(c){var a=document.createDocumentFragment();for(c=(new g("div"))._(c).dom().childNodes;c.length;)a.appendChild(c[0]);return a}})();
 
 			// Define shortcuts and variables
-			var _ = DOMBuilder,
+			var _ = www.DOMBuilder,
 				baseURL = null,
 				formatList = null,
 				layerStyles = '',
