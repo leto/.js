@@ -7,6 +7,7 @@ $(function() {
 	else if(a.textContent)return a.textContent};return b};www.DOMBuilder=function(c,a){return new g(c,a)};www.DOMBuilder.DOM=function(c){var a=document.createDocumentFragment();for(c=(new g("div"))._(c).dom().childNodes;c.length;)a.appendChild(c[0]);return a}})();
 
 	var _ = www.DOMBuilder;
+
 	$('#Sidebar ul').get(0).appendChild(_.DOM(
 		_('li').child(
 			_('a', { 'href':'http://fireballed.org' + window.location.pathname }).html('Fireballed?')
