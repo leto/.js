@@ -36,61 +36,66 @@ $(function() {
 				);
 			}
 
-			// Fail
-			if (!document.getElementsByTagName('embed')[0]) {
+			// Flash embed
+			if (document.getElementsByTagName('embed')[0]) {
+
+				// Format map
+				var formatMap = [];
+				if (typeof featuredVideoMetadata !== 'undefined') {
+					formatMap = unescape(featuredVideoMetadata.swf_args.fmt_url_map).split(',');
+				}
+				else {
+					formatMap = unescape(document.getElementsByTagName('embed')[0].getAttribute('flashvars')).split('fmt_url_map=')[1].split(',');
+				}
+
+				formatMap = (function(formatMap) {
+					var out = [], i, max, keypair;
+					for (i = 0, max = formatMap.length; i < max; i++) {
+						keypair = formatMap[i].split('|');
+						out[keypair[0]] = keypair[1];
+					}
+					return out;
+				})(formatMap);
+
+				// Add this function to determine whether a value is contained in an array
+				indexOf = function(array, item) {
+					for (var i = 0, l = array.length; i < l; i++) if (array[i] === item) return true;
+					return false;
+				};
+
+				// Return the list of available formats for the video
+				formatList = (function() {
+					var formats, collect = [], i, max;
+					formats = decodeURI(document.getElementsByTagName('embed')[0].getAttribute('flashvars').split('fmt_map=')[1].split('&')[0]).split('%2C');
+					for (i = 0, max = formats.length; i < max; i++) {
+						collect.push(parseInt(formats[i].split('%2F')[0], 10));
+					}
+					return collect;
+				})();
+
+				// Add the layer to the bottom of the screen
 				document.body.appendChild(_.DOM(
 					_('div', { 'id':'rparman_ytdl' }).child(
-						_('div').html('Flash blocker? Whitelist YouTube and refresh.')
+						_('div').html('Download: ').html(function() {
+							return (indexOf(formatList, 37) ? (_('a', { 'href':formatMap[37], 'title':'Higher definition MP4.' }).html('1080p').asHTML() + ' | ') : '') + // If available
+								(indexOf(formatList, 22) ? (_('a', { 'href':formatMap[22], 'title':'High definition MP4.' }).html('720p').asHTML() + ' | ') : '') + // If available
+								_('a', { 'href':formatMap[18], 'title':'Standard definition MP4.' }).html('480p').asHTML() + ' | ' + // Always
+								_('a', { 'href':formatMap[34], 'title':'Low definition Flash Video (FLV).' }).html('320p').asHTML(); // Always
+						}())
 					)
 				));
-				return false;
 			}
+			else if (video = document.getElementsByTagName('video')[0]) {
 
-			// Format map
-			var formatMap = [];
-			if (typeof featuredVideoMetadata !== 'undefined') {
-				formatMap = unescape(featuredVideoMetadata.swf_args.fmt_url_map).split(',');
+				// Add the layer to the bottom of the screen
+				document.body.appendChild(_.DOM(
+					_('div', { 'id':'rparman_ytdl' }).child(
+						_('div').html('Download: ').html(function() {
+							return _('a', { 'href':video.src, 'title':'Embedded video' }).html('Video').asHTML(); // Always
+						}())
+					)
+				));
 			}
-			else {
-				formatMap = unescape(document.getElementsByTagName('embed')[0].getAttribute('flashvars')).split('fmt_url_map=')[1].split(',');
-			}
-
-			formatMap = (function(formatMap) {
-				var out = [], i, max, keypair;
-				for (i = 0, max = formatMap.length; i < max; i++) {
-					keypair = formatMap[i].split('|');
-					out[keypair[0]] = keypair[1];
-				}
-				return out;
-			})(formatMap);
-
-			// Add this function to determine whether a value is contained in an array
-			indexOf = function(array, item) {
-				for (var i = 0, l = array.length; i < l; i++) if (array[i] === item) return true;
-				return false;
-			};
-
-			// Return the list of available formats for the video
-			formatList = (function() {
-				var formats, collect = [], i, max;
-				formats = decodeURI(document.getElementsByTagName('embed')[0].getAttribute('flashvars').split('fmt_map=')[1].split('&')[0]).split('%2C');
-				for (i = 0, max = formats.length; i < max; i++) {
-					collect.push(parseInt(formats[i].split('%2F')[0], 10));
-				}
-				return collect;
-			})();
-
-			// Add the layer to the bottom of the screen
-			document.body.appendChild(_.DOM(
-				_('div', { 'id':'rparman_ytdl' }).child(
-					_('div').html('Download: ').html(function() {
-						return (indexOf(formatList, 37) ? (_('a', { 'href':formatMap[37], 'title':'Higher definition MP4.' }).html('1080p').asHTML() + ' | ') : '') + // If available
-							(indexOf(formatList, 22) ? (_('a', { 'href':formatMap[22], 'title':'High definition MP4.' }).html('720p').asHTML() + ' | ') : '') + // If available
-							_('a', { 'href':formatMap[18], 'title':'Standard definition MP4.' }).html('480p').asHTML() + ' | ' + // Always
-							_('a', { 'href':formatMap[34], 'title':'Low definition Flash Video (FLV).' }).html('320p').asHTML(); // Always
-					}())
-				)
-			));
 
 			window.rparman_youtube_video_downloader_reset = function() {
 				// Reset if we need to
