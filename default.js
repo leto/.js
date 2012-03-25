@@ -12,29 +12,24 @@ $(function() {
 	var $feeds = $.grep($.map($('link[rel=alternate]'), function(e, i) {
 		$e = $(e);
 		if ($e.attr('href') !== '' && $e.attr('type') !== '') {
-			var alternate = 'Alternate content';
+			var alternate = $e.attr('type');
 			return _('li', {
 				'class': (function($e) {
 					var $type = $e.attr('type');
 
 					if ($type === 'application/rss+xml' || $type === 'application/atom+xml') {
-						alternate = 'Feed';
 						return 'feed';
 					}
 					else if ($type === 'text/html') {
-						alternate = 'HTML';
 						return 'html';
 					}
 					else if ($type.indexOf('oembed') !== false) {
-						alternate = 'Shareable content';
 						return 'share';
 					}
 					else if ($type.indexOf('opml') !== false) {
-						alternate = 'OPML';
 						return 'opml';
 					}
 					else {
-						alternate = 'Alternate content';
 						return '';
 					}
 				})($e)
@@ -66,6 +61,7 @@ $(function() {
 					'border: 1px solid #999;' +
 					'background: #eee;' +
 					'opacity: 0.1;' +
+					'z-index: 1000;' +
 					'-webkit-box-shadow: 0 1px 15px rgba(0, 0, 0, 0.5);' +
 					'-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);' +
 					'box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);' +
